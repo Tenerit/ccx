@@ -47,10 +47,13 @@ Fattest tool outputs  (biggest tool_results = context bloat)
 ## Install
 
 ```bash
-npm install -g ccx
+npm install -g @tenerit/ccx
 # or run without installing:
-npx ccx cost
+npx @tenerit/ccx cost
 ```
+
+(Installs the `ccx` command. The package is scoped because the bare `ccx` name was
+already taken on npm.)
 
 ## Usage
 

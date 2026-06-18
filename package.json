@@ -1,5 +1,5 @@
 {
-  "name": "ccx",
+  "name": "@tenerit/ccx",
   "version": "0.1.0",
   "description": "Claude Code X-Ray — cross-session cost & token-waste analytics for your local Claude Code logs. Zero network, zero deps.",
   "type": "module",
