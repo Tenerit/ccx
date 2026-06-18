@@ -1,0 +1,10 @@
+{
+  "_comment": "USD per 1,000,000 tokens. Cache write 5m = input x1.25, write 1h = input x2, read = input x0.1. Edit freely or override with --pricing <file>. Prices as of 2026-06.",
+  "_match": "Each key is matched as a substring of the model id (e.g. 'claude-opus-4-8' contains 'opus'). First match wins; order matters.",
+  "models": {
+    "fable": { "input": 10, "output": 50, "cacheWrite5m": 12.5, "cacheWrite1h": 20, "cacheRead": 1.0 },
+    "opus": { "input": 5, "output": 25, "cacheWrite5m": 6.25, "cacheWrite1h": 10, "cacheRead": 0.5 },
+    "sonnet": { "input": 3, "output": 15, "cacheWrite5m": 3.75, "cacheWrite1h": 6, "cacheRead": 0.3 },
+    "haiku": { "input": 1, "output": 5, "cacheWrite5m": 1.25, "cacheWrite1h": 2, "cacheRead": 0.1 }
+  }
+}

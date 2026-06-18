@@ -1,0 +1,38 @@
+{
+  "name": "ccx",
+  "version": "0.1.0",
+  "description": "Claude Code X-Ray — cross-session cost & token-waste analytics for your local Claude Code logs. Zero network, zero deps.",
+  "type": "module",
+  "bin": {
+    "ccx": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "pricing.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "node --import tsx src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "tokens",
+    "cost",
+    "analytics",
+    "llm",
+    "observability"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
