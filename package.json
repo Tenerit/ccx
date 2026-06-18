@@ -27,6 +27,15 @@
     "observability"
   ],
   "license": "MIT",
+  "author": "Tenerit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tenerit/ccx.git"
+  },
+  "homepage": "https://github.com/Tenerit/ccx#readme",
+  "bugs": {
+    "url": "https://github.com/Tenerit/ccx/issues"
+  },
   "engines": {
     "node": ">=18"
   },
