@@ -63,6 +63,20 @@ function blockChars(block: any): number {
   return 0;
 }
 
+// Did this usage block actually bill any tokens? Used to avoid warning about an
+// unknown model on empty/heartbeat messages.
+function hadTokens(u: Usage): boolean {
+  return (
+    (u.input_tokens ?? 0) +
+      (u.output_tokens ?? 0) +
+      (u.cache_creation_input_tokens ?? 0) +
+      (u.cache_read_input_tokens ?? 0) +
+      (u.cache_creation?.ephemeral_5m_input_tokens ?? 0) +
+      (u.cache_creation?.ephemeral_1h_input_tokens ?? 0) >
+    0
+  );
+}
+
 // Parse one .jsonl session into an aggregated SessionStat.
 export async function parseSession(
   project: string,
@@ -86,7 +100,11 @@ export async function parseSession(
     reads: [],
     fatDumps: [],
     thinkingChars: 0,
+    unknownModels: new Set(),
   };
+
+  // tool_use id → tool name, so a tool_result can name the tool that produced it.
+  const toolNames = new Map<string, string>();
 
   const rl = createInterface({
     input: createReadStream(file, { encoding: "utf8" }),
@@ -125,15 +143,26 @@ export async function parseSession(
         if (w5 + w1 === 0) stat.cacheWriteFlat += usage.cache_creation_input_tokens ?? 0;
         stat.cacheRead += usage.cache_read_input_tokens ?? 0;
         const price = typeof msg.model === "string" ? priceFor(msg.model, pricing) : null;
-        if (price) stat.cost += usageCost(usage, price);
+        if (price) {
+          stat.cost += usageCost(usage, price);
+        } else if (typeof msg.model === "string" && hadTokens(usage)) {
+          // No price match — record it so we can warn instead of silently
+          // dropping this turn's cost (which would understate the total).
+          stat.unknownModels.add(msg.model);
+        }
       }
       if (Array.isArray(msg.content)) {
         for (const block of msg.content) {
           if (block?.type === "thinking" && typeof block.thinking === "string") {
             stat.thinkingChars += block.thinking.length;
-          } else if (block?.type === "tool_use" && block.name === "Read") {
-            const fp = block.input?.file_path;
-            if (typeof fp === "string") stat.reads.push({ file: fp });
+          } else if (block?.type === "tool_use") {
+            if (typeof block.id === "string" && typeof block.name === "string") {
+              toolNames.set(block.id, block.name);
+            }
+            if (block.name === "Read") {
+              const fp = block.input?.file_path;
+              if (typeof fp === "string") stat.reads.push({ file: fp });
+            }
           }
         }
       }
@@ -146,7 +175,11 @@ export async function parseSession(
           const chars = blockChars(block);
           if (chars > 0) {
             stat.fatDumps.push({
-              tool: typeof block.tool_use_id === "string" ? "tool_result" : "tool_result",
+              // Name the tool that produced this output when we can resolve it.
+              tool:
+                (typeof block.tool_use_id === "string" &&
+                  toolNames.get(block.tool_use_id)) ||
+                "tool_result",
               chars,
               sessionId: stat.sessionId,
               project,

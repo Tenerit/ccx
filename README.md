@@ -2,7 +2,7 @@
 
 **See what your Claude Code sessions actually cost — and what wasted money.**
 
-[![version](https://img.shields.io/badge/version-0.1.0-green)](package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-green)](package.json)
 [![runtime deps](https://img.shields.io/badge/runtime%20deps-0-success)](package.json)
 [![network](https://img.shields.io/badge/network-none-success)](#privacy)
 [![Node](https://img.shields.io/badge/node-%E2%89%A518-blue)](package.json)
@@ -21,7 +21,7 @@ shows you:
    giant tool outputs that bloated the context, unstable prompt prefixes that
    churned the cache, and how much you spent on thinking.
 
-Zero network. Zero runtime dependencies. Your logs never leave your machine.
+Zero network at runtime. Zero runtime dependencies. Your logs never leave your machine.
 
 ```
 $ ccx cost

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { collect, projectsDir } from "./parse.js";
-import { loadPricing } from "./pricing.js";
+import { loadPricing, pricingAgeDays } from "./pricing.js";
 import { buildCost, printCost } from "./cost.js";
 import { buildWaste, printWaste } from "./waste.js";
 import { bold, cyan, dim } from "./format.js";
@@ -60,8 +60,27 @@ async function main() {
   }
 
   const pricing = loadPricing(args.pricing);
+  const age = pricingAgeDays(pricing);
+  if (age !== null && age > 90) {
+    process.stderr.write(
+      `ccx: warning — pricing table is ${age} days old; rates may be stale. ` +
+        `Verify pricing.json (or pass --pricing <file>).\n`,
+    );
+  }
+
   const sinceMs = args.days ? Date.now() - args.days * 86_400_000 : undefined;
   const stats = await collect(pricing, { projectFilter: args.project, sinceMs });
+
+  // Loud, not silent: if any turns ran on a model with no price, the totals are
+  // understated — say so instead of quietly reporting a low number.
+  const unknown = new Set<string>();
+  for (const s of stats) for (const m of s.unknownModels) unknown.add(m);
+  if (unknown.size) {
+    process.stderr.write(
+      `ccx: warning — no price for model(s): ${[...unknown].join(", ")}. ` +
+        `Their cost was NOT counted (total understated). Add them to pricing.json.\n`,
+    );
+  }
 
   if (!stats.length) {
     if (args.json) {

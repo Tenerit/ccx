@@ -23,6 +23,8 @@ export interface ModelPrice {
 
 export interface PricingTable {
   models: Record<string, ModelPrice>;
+  // ISO date the rates were last verified; used to warn when the table is stale.
+  updated?: string;
 }
 
 // One Read tool call we saw, used by the duplicate-read detector.
@@ -58,4 +60,6 @@ export interface SessionStat {
   reads: ReadCall[];
   fatDumps: FatDump[];
   thinkingChars: number;
+  // models seen with billable usage but no matching price — cost left uncounted
+  unknownModels: Set<string>;
 }
