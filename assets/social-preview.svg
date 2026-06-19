@@ -1,0 +1,23 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>ccx — Claude Code X-Ray</title>
+  <desc>Cross-session cost and token-waste analytics for your local Claude Code logs.</desc>
+  <rect x="0" y="0" width="1280" height="640" fill="#0E1117"/>
+  <rect x="0" y="0" width="8" height="640" fill="#34D399"/>
+  <g font-family="'Segoe UI', system-ui, -apple-system, Roboto, sans-serif">
+    <text x="80" y="112" font-size="22" font-weight="500" letter-spacing="3" fill="#34D399">CLAUDE CODE · CLI</text>
+    <text x="76" y="196" font-size="88" font-weight="700" fill="#F8FAFC">ccx</text>
+    <text x="80" y="252" font-size="30" fill="#94A3B8">Cross-session cost &amp; token-waste analytics</text>
+    <text x="80" y="294" font-size="30" fill="#94A3B8">for your local Claude Code logs.</text>
+
+    <rect x="80" y="338" width="1120" height="196" rx="16" fill="#0A0D12" stroke="#233044"/>
+    <g font-family="'Cascadia Code', Consolas, 'Courier New', monospace" font-size="24">
+      <text x="110" y="386"><tspan fill="#475569">$ </tspan><tspan fill="#34D399">ccx cost</tspan></text>
+      <text x="134" y="424" fill="#CBD5E1"><tspan fill="#34D399">$38.91</tspan> total · 142 sessions · cache hit-rate 86%</text>
+      <text x="110" y="470"><tspan fill="#475569">$ </tspan><tspan fill="#34D399">ccx waste</tspan></text>
+      <text x="134" y="508" fill="#CBD5E1"><tspan fill="#FBBF24">94×</tspan> dup read  …/dashboard.html  — burned tokens</text>
+    </g>
+
+    <text x="80" y="592" font-size="20" fill="#5B6675">github.com/Tenerit/ccx</text>
+    <text x="1200" y="592" font-size="20" fill="#5B6675" text-anchor="end">npx @tenerit/ccx · zero deps · zero network · MIT</text>
+  </g>
+</svg>

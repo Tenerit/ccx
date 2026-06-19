@@ -2,6 +2,14 @@
 
 **See what your Claude Code sessions actually cost — and what wasted money.**
 
+[![version](https://img.shields.io/badge/version-0.1.0-green)](package.json)
+[![runtime deps](https://img.shields.io/badge/runtime%20deps-0-success)](package.json)
+[![network](https://img.shields.io/badge/network-none-success)](#privacy)
+[![Node](https://img.shields.io/badge/node-%E2%89%A518-blue)](package.json)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+![ccx — cross-session cost and token-waste analytics for your Claude Code logs](assets/social-preview.png)
+
 `ccx` reads the session logs Claude Code already writes to
 `~/.claude/projects/**/*.jsonl` and turns them into two things nobody else
 shows you:
